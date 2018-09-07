@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title>WebJobs ES6 Tester</title>
+    <!-- <script src="https://cdn.babylonjs.com/babylon.js"></script> -->
+
+    <!-- <script id="require" data-main="testsite/config" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
+
+    <!--
+    D:\Node\webjobs\node_modules\requirejs\bin\r.js
+    <script data-main="testsite/config" src="node_modules\requirejs\bin\r.js"></script>
+    -->
+
+
+    <!--
+    <script src="https://cdn.babylonjs.com/babylon.max.js"></script>
+    <script src="https://cdn.babylonjs.com/babylon.worker.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <script src="./index.js"></script>
+  -->
+
+    <style>
+    html, body {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #renderCanvas {
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+    }
+    </style>
+
+    <meta name="application-name" content="WebJobs ES6 Tester">
+  </head>
+  <form>
+    <div>
+      <label for="param1">Parameter One</label>
+      <input id="param1" type="text" name="text">
+      <label for="param2">Parameter Two</label>
+      <input id="param2" type="text" name="text">
+    </div>
+    <div>
+      <input id="add" type="submit" value="Add">
+    </div>
+    <div>
+      <textarea id="result"></textarea>
+    </div>
+  </form>
+
+  <script src="main.js"  type="module"></script>  
+
+  </body>
+</html>

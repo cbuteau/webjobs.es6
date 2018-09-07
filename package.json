@@ -1,0 +1,26 @@
+{
+  "name": "webjobs.es6",
+  "version": "1.0.0",
+  "description": "ES6 webjob manager.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbuteau/webjobs.es6.git"
+  },
+  "keywords": [
+    "webworker",
+    "library"
+  ],
+  "author": "Christopher W Buteau <cbuteau@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cbuteau/webjobs.es6/issues"
+  },
+  "homepage": "https://github.com/cbuteau/webjobs.es6#readme",
+  "dependencies": {
+    "express": "4.16.3"
+  }
+}
