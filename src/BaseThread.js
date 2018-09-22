@@ -15,6 +15,10 @@ onMessage(e) {
       }.catch(function(e) {
         console.error(e);
         console.log('failed to import job');
+        postMessage({
+          msg: 3,
+          workerId: data.workerId
+        })
       })
 
       break;
@@ -22,5 +26,5 @@ onMessage(e) {
 }
 
 postMessage({
-  msg: 1
-})
+  msg: 0
+});

@@ -49,11 +49,16 @@ And a state machine describing how a thread is managed.
 @startuml
 
 [*] --> STARTING
-STARTING --> STARTED
+STARTING --> STARTED : SCRIPTLOADED
 STARTING : Here we instantiate the Worker() object.
 
-STARTED --> LOADED
-STARTED : We get a message back that the basethread script properly loaded.
+STARTING --> COMPLETED : Exception instantiating Worker.
+
+STARTED --> LOADED : BASEINIT_COMPLETE
+STARTED : The basethread script properly loaded.
+
+STARTED --> COMPLETED : BASEINIT_ERROR
+
 LOADED --> INITIALIZED
 
 INITIALIZED : This is where we load requirejs.
@@ -71,3 +76,31 @@ COMPLETED --> [*]
 
 @enduml
 ```
+
+## Concept
+
+The idea is to make it easy to submit jobs to a managed threadpool.
+Both client and thread base structureshave to exist.
+
+But the end result would be queueing work and using a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) to then or catch the result.
+
+```javascript
+  function exec() {
+    var that = this;
+    job = TroubleMaker.start({
+      jobpath: 'src/ParsingJob.js'
+    });
+    job.then(function(result) {
+      tht._updateResult(result.toString());
+    }).catch(function(e) {
+      console.error(e);
+      that.dispatchEvent('JobFailed');
+    });
+  }
+```
+## Drives
+
+Although threads are a new are for browsers.
+it is noted there is a sharp spin up times for these threads.
+
+Only a messaging/event system works between Main and the threads...so it will be the goal to manage and recycle them reinitializing them.
