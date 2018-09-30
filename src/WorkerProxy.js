@@ -62,7 +62,9 @@ class WorkerProxy {
 
       //this.settings.__actualWorker = new Worker('/src/BaseThread.js');
       this.settings._worker = new Worker('/src/BaseThread.js');
-      this.settings._worker.onmessage = this._boundOnMessage;
+      this.settings._worker.addEventListener('message', this._boundOnMessage);
+      //this.settings._worker.addEventListener('error', this._boundOnError);
+      //this.settings._worker.onmessage = this._boundOnMessage;
       this.settings._worker.onerror = this._boundOnError;
 
     } catch(e) {
@@ -82,6 +84,9 @@ class WorkerProxy {
         that.reject(new Error('Job Timeout'));
       }, options.timeout);
     }
+
+    // maybe post message to initialize?
+    this.settings._worker.postMessage({ msg: 13 });
 
     // this.settings._worker.postMessage({
     //   msg: MessageIds.BASEINIT,
