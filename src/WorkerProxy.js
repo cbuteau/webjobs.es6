@@ -62,9 +62,7 @@ class WorkerProxy {
 
       //this.settings.__actualWorker = new Worker('/src/BaseThread.js');
       this.settings._worker = new Worker('/src/BaseThread.js');
-      this.settings._worker.addEventListener('message', this._boundOnMessage);
-      //this.settings._worker.addEventListener('error', this._boundOnError);
-      //this.settings._worker.onmessage = this._boundOnMessage;
+      this.settings._worker.onmessage = this._boundOnMessage;
       this.settings._worker.onerror = this._boundOnError;
 
     } catch(e) {

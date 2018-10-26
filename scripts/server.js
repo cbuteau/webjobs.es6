@@ -1,4 +1,6 @@
 
+var path = require("path");
+
 var express = require('express');
 var app = express();
 
@@ -7,7 +9,9 @@ app.set('port', 3000);
 
 //app.use('src', express.static(__dirname + '/src'));
 
-app.use(express.static(__dirname));
+var rootDir = path.join(__dirname, '..');
+
+app.use(express.static(rootDir));
 
 // Listen for requests
 var server = app.listen(app.get('port'), function() {

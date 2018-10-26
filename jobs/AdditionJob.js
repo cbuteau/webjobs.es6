@@ -8,3 +8,5 @@ class AdditionJob {
     return parameters.param1 + parameters.param2;
   }
 }
+
+export AdditionJob;

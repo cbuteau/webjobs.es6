@@ -6,8 +6,8 @@ class TroubleMaker {
   constructor() {
   }
 
-  setup(resolver) {
-
+  setup(options) {
+    this.options = options;
   }
 
   start(options) {
@@ -23,7 +23,7 @@ class TroubleMaker {
 
 //export let TroubleMaker = new TroubleMaker();
 
-const instance = new TroubleMaker()
-export { instance as TroubleMaker }
+//const instance = new TroubleMaker()
+//export default { instance as TroubleMaker }
 
-//export default new TroubleMaker();
+export default new TroubleMaker();
