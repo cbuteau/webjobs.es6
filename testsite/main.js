@@ -18,7 +18,7 @@
 
   addButton.addEventListener('click', function(e) {
     var prom = TroubleMaker.start({
-      jobPath: 'jobs/AdditionJob',
+      jobPath: '../jobs/AdditionJob.js',
       jobparams: {
         param1: parseInt(param1.value),
         param2: parseInt(param2.value),

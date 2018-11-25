@@ -18,3 +18,11 @@ Just got babel convertsing my shit...
 its not running yet...
 
 https://medium.com/@SunnyB/how-to-convert-es6-into-es5-using-babel-1b533d31a169
+
+11/24/2018
+
+New thoughts...webjobs is ....
+
+transpiled to IE ES5
+
+provides the same interface to node js ...and threadpooling.

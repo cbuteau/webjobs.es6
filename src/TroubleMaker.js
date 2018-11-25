@@ -4,6 +4,7 @@ import WorkerProxy from './WorkerProxy.js'
 
 class TroubleMaker {
   constructor() {
+    this.workers = {};
   }
 
   setup(options) {
@@ -17,8 +18,11 @@ class TroubleMaker {
       timeout: options.timeout
     });
 
+    this.workers[proxy.settings.workerId] = proxy;
+
     return proxy.getPromise();
   }
+  
 };
 
 //export let TroubleMaker = new TroubleMaker();

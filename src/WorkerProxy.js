@@ -23,26 +23,16 @@ function ensureId() {
 var defaultSettings = {
   id: null,
   state: WorkerStates.STARTING
-  // get _worker() {
-  //   return this.__actualWorker;
-  // }
 };
 
 class WorkerProxy {
   constructor(options) {
+    this.messages  = [];
+    this.callbacks = [];
     this._boundOnMessage = this.onMessage.bind(this);
     this._boundOnError = this.onError.bind(this);
     var that = this;
     this.options = options;
-
-    // this.settings = {
-    //   is: ensureId(),
-    //   startTime: Date.now(),
-    //   state: WorkerStates.STARTING,
-    //   get _worker() {
-    //     return this.__actualWorker;
-    //   }
-    // };
 
     this.settings = Object.assign({
       id: ensureId(),
@@ -67,6 +57,7 @@ class WorkerProxy {
 
     } catch(e) {
       console.error(e);
+      this.updateState(WorkerStates.COMPLETED);
     }
 
 
@@ -84,12 +75,10 @@ class WorkerProxy {
     }
 
     // maybe post message to initialize?
-    this.settings._worker.postMessage({ msg: 13 });
-
-    // this.settings._worker.postMessage({
-    //   msg: MessageIds.BASEINIT,
-    //   jobPath: options.jobPath
-    // });
+    this.settings._worker.postMessage({
+      msg: MessageIds.BASEINIT,
+      jobPath: options.jobPath
+    });
   }
 
   onMessage(e) {
@@ -106,8 +95,28 @@ class WorkerProxy {
       case MessageIds.BASEINIT:
         break;
       case MessageIds.BASEINIT_COMPLETE:
+        this.settings.state = WorkerStates.INITIALIZED;
+        this._worker.postMessage({
+          msg: MessageIds.DISPATCH,
+          workerId: data.workerId,
+          params: this.jobparams
+        });
+        this.updateState(WorkerStates.JOB);
         break;
       case MessageIds.BASEINIT_ERROR:
+        this.updateState(WorkerStates.COMPLETED);
+        this.reject(data.error);
+        break;
+      case MessageIds.DISPATCH_COMPLETE:
+        this.resolve(data.payload);
+        this.updateState(WorkerStates.COMPLETED);
+        break;
+      case MessageIds.DISPATCH_ERROR:
+        this.reject(data.error);
+        this.updateState(WorkerStates.COMPLETED);
+        break;
+      default:
+        console.log('Unhandled = ' + data.msg);
         break;
     }
   }
@@ -118,6 +127,45 @@ class WorkerProxy {
 
   getPromise() {
     return this._promise;
+  }
+
+  subscribe(eventId, callback) {
+    // if we have more events we can build a pubsub mechanism...
+    this.callbacks.push(callback);
+  }
+
+  updateState(newState) {
+    this.settings.state = newState;
+    for (var i = 0; i < this.callbacks.length; i++) {
+      this.callbacks[i](newState, this);
+    }
+  }
+
+  queue(msg) {
+    this.messages.push(msg);
+  }
+
+  process() {
+    var msg = this.messages.pop();
+    while (msg) {
+      this._worker.postMessage(msg);
+      msg = this.messages.pop();
+    }
+  }
+
+  restart(parameters) {
+    var that = this;
+    this._promise = new Promise(function(resolve, reject) {
+      that.resolve = resolve;
+      that.reject = reject;
+    });
+
+    this.jobparams = parameters.jobparams;
+    this.queue({
+      msg: MessageIds.BASEINIT,
+      jobPath: parameters.jobPath,
+      workerId: this.settings.workerId
+    });
   }
 }
 
