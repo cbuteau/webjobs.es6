@@ -30,6 +30,19 @@ console.log(self);
 
 // trying this maybe webworkers cannot be es6 now..
 
+function convertError(error) {
+  var converted = {
+    message: err.message,
+    stack: err.stack
+  };
+
+  if (err.code) {
+    converted.code = err.code;
+  }
+
+  return converted;
+}
+
 onmessage = function(e) {
   var data = e.data;
   console.log('msg in' + data.msg);
@@ -48,6 +61,16 @@ onmessage = function(e) {
           workerId: data.workerId
         });
       });
+      break;
+    case 4:
+      try {
+        self.dispatcher.dispatch(data.workerId, data.params);
+      } catch(err) {
+        postMessage({
+          msg: 6,
+          error: convertError(err)
+        });
+      }
       break;
   }
 }

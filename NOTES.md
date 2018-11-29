@@ -26,3 +26,7 @@ New thoughts...webjobs is ....
 transpiled to IE ES5
 
 provides the same interface to node js ...and threadpooling.
+
+11/28/2018
+
+Import seems to work with extra .. in job path but the object is not a constructor.
