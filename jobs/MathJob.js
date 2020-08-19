@@ -4,7 +4,7 @@ class MathJob {
   constructor() {
   }
 
-  dispatch(parameters) {
+  dispatch(workerId, parameters) {
     var op = '+';
     if (parameters && parameters.op) {
       op = parameters.op;
@@ -35,4 +35,4 @@ class MathJob {
   }
 }
 
-export default MathJob;
+export { MathJob as Job }

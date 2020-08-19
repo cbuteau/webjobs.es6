@@ -20,7 +20,7 @@ function ensureId() {
   return id;
 }
 
-var defaultSettings = {
+const DEFAULT_SETTINGS = {
   id: null,
   state: WorkerStates.STARTING
 };
@@ -34,10 +34,10 @@ class WorkerProxy {
     var that = this;
     this.options = options;
 
-    this.settings = Object.assign({
+    this.settings = Object.assign(DEFAULT_SETTINGS, {
       id: ensureId(),
       startTime: Date.now(),
-    }, defaultSettings);
+    });
 
     try {
       // this.settings.__actualWorker = new Worker('./src/BaseThread.js', {
@@ -51,7 +51,7 @@ class WorkerProxy {
       // });
 
       //this.settings.__actualWorker = new Worker('/src/BaseThread.js');
-      this.settings._worker = new Worker('/src/BaseThread.js');
+      this.settings._worker = new Worker('/src/BaseThread.js', {type:'module'});
       this.settings._worker.onmessage = this._boundOnMessage;
       this.settings._worker.onerror = this._boundOnError;
 
@@ -96,10 +96,10 @@ class WorkerProxy {
         break;
       case MessageIds.BASEINIT_COMPLETE:
         this.settings.state = WorkerStates.INITIALIZED;
-        this._worker.postMessage({
+        this.settings._worker.postMessage({
           msg: MessageIds.DISPATCH,
           workerId: data.workerId,
-          params: this.jobparams
+          params: this.options.jobParams
         });
         this.updateState(WorkerStates.JOB);
         break;

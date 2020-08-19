@@ -10,9 +10,11 @@ function factorial(n) {
 
 class RecursiveJob {
   constructor() {
-  },
+  }
 
-  dispatch(parameters) {
+  dispatch(workerId, parameters) {
     return factorial(params.n);
   }
 }
+
+export { RecursiveJob as Job }

@@ -32,12 +32,12 @@ console.log(self);
 
 function convertError(error) {
   var converted = {
-    message: err.message,
-    stack: err.stack
+    message: error.message,
+    stack: error.stack
   };
 
-  if (err.code) {
-    converted.code = err.code;
+  if (error.code) {
+    converted.code = error.code;
   }
 
   return converted;
@@ -49,7 +49,7 @@ onmessage = function(e) {
   switch (data.msg) {
     case 1:
       import(data.jobPath).then(function(dispatcher) {
-        self.dispatcher = new dispatcher();
+        self.dispatcher = new dispatcher.Job();
         postMessage({
           msg: 2,
           workerId: data.workerId
@@ -64,7 +64,11 @@ onmessage = function(e) {
       break;
     case 4:
       try {
-        self.dispatcher.dispatch(data.workerId, data.params);
+        var result = self.dispatcher.dispatch(data.workerId, data.params);
+        postMessage({
+          msg: 5,
+          payload: result
+        });
       } catch(err) {
         postMessage({
           msg: 6,

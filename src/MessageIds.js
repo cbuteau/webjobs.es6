@@ -1,6 +1,6 @@
 /*jslint es6 */
 
-const MessageIds = Object.freeze({
+const MessageIds = {
   SCRIPTLOADED: 0,
   BASEINIT: 1,
   BASEINIT_COMPLETE: 2,
@@ -8,6 +8,6 @@ const MessageIds = Object.freeze({
   DISPATCH: 4,
   DISPATCH_COMPLETE: 5,
   DISPATCH_ERROR: 6
-});
+};
 
 export default MessageIds
