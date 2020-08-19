@@ -13,7 +13,7 @@ class RecursiveJob {
   }
 
   dispatch(workerId, parameters) {
-    return factorial(params.n);
+    return factorial(parameters.n);
   }
 }
 
