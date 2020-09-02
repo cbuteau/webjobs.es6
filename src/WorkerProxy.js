@@ -39,6 +39,8 @@ class WorkerProxy {
       startTime: Date.now(),
     });
 
+    this.settings.infoCallback = options.infoCallback;
+
     try {
       // this.settings.__actualWorker = new Worker('./src/BaseThread.js', {
       //   type: 'module',
@@ -115,6 +117,16 @@ class WorkerProxy {
         this.reject(data.error);
         this.updateState(WorkerStates.COMPLETED);
         break;
+      case MessageIds.DISPATCH_INFO:
+        if (this.settings.infoCallback) {
+          try {
+            this.settings.infoCallback(data);
+          } catch (err) {
+            console.error(err);
+            console.error(' your callback keeps exceptioning...fix it.');
+          }
+        }
+        break;
       default:
         console.log('Unhandled = ' + data.msg);
         break;
@@ -159,6 +171,8 @@ class WorkerProxy {
       that.resolve = resolve;
       that.reject = reject;
     });
+
+    this.settings.infoCallback = parameters.infoCallback;
 
     this.jobparams = parameters.jobparams;
     this.queue({

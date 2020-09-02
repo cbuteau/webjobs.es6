@@ -94,10 +94,12 @@
     });
 
     prom.then(function(result) {
+      // TODO....move to using a worker...
       console.log(result);
       var zoneNames = [];
-      for (var i = 0; i < result.zones.length; i++) {
-        var currentZone = result.zones[i];
+      var zones = result.payload.zones;
+      for (var i = 0; i < zones.length; i++) {
+        var currentZone = zones[i];
         zoneNames.push(currentZone.zoneName);
       }
       zoneNames.sort(function(a, b) {

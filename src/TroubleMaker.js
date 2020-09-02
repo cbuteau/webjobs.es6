@@ -1,20 +1,30 @@
 /*jslint es6 */
 
-import WorkerProxy from './WorkerProxy.js'
+import ThePool from './ThePool.js'
 
 class TroubleMaker {
   constructor() {
     this.workers = {};
+    this.isSetup = false;
   }
 
   setup(options) {
     this.options = options;
+    this.isSetup = true;
   }
 
   start(options) {
-    var proxy = new WorkerProxy({
-      jobPath: options.jobPath,
+    if (!this.isSetup) {
+      throw new Error('setup method not called.');
+    }
+
+    var proxy = ThePool.pickup({
       jobParams: options.jobParams,
+      baseUrl: this.options.baseUrl,
+      requirePath: this.options.fullPathToRequire,
+      appPath: this.options.appPath,
+      jobPath: options.jobPath,
+      infoCallback: options.infoCallback,
       timeout: options.timeout
     });
 
@@ -22,7 +32,7 @@ class TroubleMaker {
 
     return proxy.getPromise();
   }
-  
+
 };
 
 //export let TroubleMaker = new TroubleMaker();

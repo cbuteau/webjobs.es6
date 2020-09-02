@@ -65,10 +65,24 @@ onmessage = function(e) {
     case 4:
       try {
         var result = self.dispatcher.dispatch(data.workerId, data.params);
-        postMessage({
-          msg: 5,
-          payload: result
-        });
+        if (result instanceof Promise) {
+          result.then(function(payload) {
+            postMessage({
+              msg: 5,
+              payload: payload
+            });
+          }).catch(function(err) {
+            postMessage({
+              msg: 6,
+              error: convertError(err)
+            });
+          });
+        } else {
+          postMessage({
+            msg: 5,
+            payload: result
+          });
+        }
       } catch(err) {
         postMessage({
           msg: 6,
