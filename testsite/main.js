@@ -82,6 +82,11 @@
   var multiGetButton = document.querySelector('#multi_getButton');
   var multiGetResult = document.querySelector('#multi_result');
 
+  var progressGetButton = document.querySelector('#ws_prog_execButton');
+  var progressProgress = document.querySelector('#ws_prog_progress');
+  var progressGetResult = document.querySelector('#ws_prog_result');
+
+
   // perform list then perrform get on selected from list.
   multiExecButton.addEventListener('click', function(e) {
     var url = 'http://api.timezonedb.com/v2.1/list-time-zone?key=' + multiApiParam.value + '&format=json';
@@ -132,6 +137,26 @@
 
     prom.then(function(result) {
       multiGetResult.innerHTML = JSON.stringify(result, null, '  '); // result.toString();
+    }).catch(function(e) {
+      console.error(e);
+    });
+  });
+
+  progressGetButton.addEventListener('click', function(e) {
+    var url = 'http://api.timezonedb.com/v2.1/get-time-zone?key=' + multiApiParam.value + '&format=json&by=zone&zone=' + multiZoneList.value;
+    var prom = TroubleMaker.start({
+      jobPath: '../../jobs/WebServiceWithProgress.js',
+      jobParams: {
+        url: url,
+        verb: 'GET'
+      },
+      infoCallback: function(data) {
+        progressProgress.innerHTML = JSON.stringify(data, null, '  ');
+      }
+    });
+
+    prom.then(function(result) {
+      progressGetResult.innerHTML = JSON.stringify(result, null, '  '); // result.toString();
     }).catch(function(e) {
       console.error(e);
     });
