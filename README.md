@@ -104,3 +104,34 @@ Although threads are a new are for browsers.
 it is noted there is a sharp spin up times for these threads.
 
 Only a messaging/event system works between Main and the threads...so it will be the goal to manage and recycle them reinitializing them.
+
+## Design
+
+Most of the design came from the ES5 version which was developed primarily off a test server in the browser.
+
+Sequence
+
+This describes the sequence of messages for a thread to initialize.  to load requirejs.  to load a JOB requirejs module. and then instantiate and call the dispatch method of the object.
+
+![Sequence](http://www.plantuml.com/plantuml/svg/5Son4S8m30NGdYbW0QkdoYgsye-4i-KWVLtM9wbUzvPWTUReZzTksdD5Udzkv15l4Qzd-UpSicN0THfXB3g7Q4kYffnetzb2HWt2vOeay4kOeXntky3Mopy0)
+
+Some enums that matter
+
+![Enums](http://www.plantuml.com/plantuml/svg/5Son4S8m30NGdYbW0QkdoYgsyu-4i-ISz7LUdr2zxct1wamTZzTfVUIEzF4yo2lU8bvN-PmyicN0-pJ2MFfKwIs9chBGlhE5Q0t2vOu4bXhb-fyRRB_z0G00)
+
+
+And a state machine describing how a thread is managed.
+
+![State](http://www.plantuml.com/plantuml/svg/5Son4S8m30NGdYbW0QkdoYgsye-4i-MSz7LP7rEzxct1wipH7w_JjEUEzFuyo2lU8bxlyZbvPCk0wpJ2M7GEqPP4JRdHlhE5Z1g4oufaZKIKwvzki7tv0m00)
+
+## Discovered through Implementation.
+
++ Web Workers or threads in the web browser world.
++ Run in a separate thread.
++ Can share no memory with the main thread.
++ Exchanges data using a Message Queue. (postMessage)
++ have a spin up time.
+
+From these discoveries I found I should implement a THreadPooling and restarting mechanism.
+
+The idea was to get the thread up and running and through messages tell it to reinitialize and load a new job to execute.

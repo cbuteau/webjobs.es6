@@ -1,0 +1,12 @@
+@startuml
+
+Main->WebWorker : start
+WebWorker->Main : SCRIPTLOADED
+Main->WebWorker : BASEINIT
+WebWorker->Main : BASEINIT_COMPLETE
+WebWorker->Main : BASEINIT_ERROR
+Main->WebWorker : DISPATCH
+WebWorker->Main : DISPATCH_COMPLETE
+WebWorker->Main : DISPATCH_ERROR
+
+@enduml
