@@ -6,3 +6,6 @@ coverage/
 
 # Instrument by istanbul
 instrument/
+
+# deploy modify paths
+out/

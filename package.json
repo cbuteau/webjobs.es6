@@ -27,6 +27,9 @@
   },
   "devDependencies": {
     "babel-preset-env": "1.7.0",
+    "escodegen": "2.0.0",
+    "esprima": "4.0.1",
+    "inquirer": "7.3.3",
     "lodash": "4.17.14"
   }
 }
