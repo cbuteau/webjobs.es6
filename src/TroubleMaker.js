@@ -6,6 +6,9 @@ class TroubleMaker {
   constructor() {
     this.workers = {};
     this.isSetup = false;
+    this.options = {
+      appPath: ''
+    };
   }
 
   setup(options) {

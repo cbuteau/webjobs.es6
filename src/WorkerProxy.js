@@ -62,6 +62,8 @@ class WorkerProxy {
       if (this.options.appPath) {
         jobPath = this.options.appPath + jobPath;
         this.settings.jobPath = jobPath;
+      } else {
+        this.settings.jobPath = jobPath;
       }
 
       this.settings._worker = new Worker(pathToBase, {type:'module'});
