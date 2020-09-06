@@ -24,7 +24,7 @@ class TroubleMaker {
       jobParams: options.jobParams,
       //baseUrl: this.options.baseUrl,
       //requirePath: this.options.fullPathToRequire,
-      //appPath: this.options.appPath,
+      appPath: this.options.appPath,
       jobPath: options.jobPath,
       infoCallback: options.infoCallback,
       timeout: options.timeout

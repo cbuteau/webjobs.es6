@@ -53,7 +53,12 @@ class WorkerProxy {
       // });
 
       //this.settings.__actualWorker = new Worker('/src/BaseThread.js');
-      this.settings._worker = new Worker('/src/BaseThread.js', {type:'module'});
+      var pathToBase = '/src/BaseThread.js';
+      if (this.options.appPath) {
+        pathToBase = this.options.appPath + pathToBase;
+      }
+
+      this.settings._worker = new Worker(pathToBase, {type:'module'});
       this.settings._worker.onmessage = this._boundOnMessage;
       this.settings._worker.onerror = this._boundOnError;
 
