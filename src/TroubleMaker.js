@@ -9,20 +9,22 @@ class TroubleMaker {
   }
 
   setup(options) {
+    // probably remove this in the future unless
+    // discuvered we have setting for every job to occur...
     this.options = options;
     this.isSetup = true;
   }
 
   start(options) {
-    if (!this.isSetup) {
-      throw new Error('setup method not called.');
-    }
+    // if (!this.isSetup) {
+    //   throw new Error('setup method not called.');
+    // }
 
     var proxy = ThePool.pickup({
       jobParams: options.jobParams,
-      baseUrl: this.options.baseUrl,
-      requirePath: this.options.fullPathToRequire,
-      appPath: this.options.appPath,
+      //baseUrl: this.options.baseUrl,
+      //requirePath: this.options.fullPathToRequire,
+      //appPath: this.options.appPath,
       jobPath: options.jobPath,
       infoCallback: options.infoCallback,
       timeout: options.timeout

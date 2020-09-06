@@ -6,7 +6,7 @@
   // var requireScriptUrl = requireScriptNode.src;
   // console.log(requireScriptUrl);
 
-  TroubleMaker.setup({});
+  //TroubleMaker.setup({});
 
   var addButton = document.querySelector('#simple_execButton');
 

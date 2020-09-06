@@ -2,8 +2,8 @@
 
 Main->WebWorker : start
 WebWorker->Main : SCRIPTLOADED
-Main->WebWorker : BASEINIT
-WebWorker->Main : BASEINIT_COMPLETE
+Main->WebWorker : BASEINIT (sends requirejs full path)
+WebWorker->Main : BASEINIT_COMPLETE (requirejs loaded..job object instantiated)
 WebWorker->Main : BASEINIT_ERROR
 Main->WebWorker : DISPATCH
 WebWorker->Main : DISPATCH_COMPLETE

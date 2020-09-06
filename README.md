@@ -8,74 +8,7 @@ The main key to managing a thread was devising a protocol to initialize, start, 
 
 Each message is an int because I prefer int compares to string compares for efficiency.
 
-```plantuml
-Main->WebWorker : start
-WebWorker->Main : SCRIPTLOADED
-Main->WebWorker : BASEINIT
-WebWorker->Main : BASEINIT_COMPLETE
-WebWorker->Main : BASEINIT_ERROR
-Main->WebWorker : DISPATCH
-WebWorker->Main : DISPATCH_COMPLETE
-WebWorker->Main : DISPATCH_ERROR
-```
 
-Some enums that matter
-
-```plantuml
-class MessagIds <<enumeration>> {
-  SCRIPTLOADED: 0,
-  BASEINIT: 1,
-  BASEINIT_COMPLETE: 2,
-  BASEINIT_ERROR: 3,
-  DISPATCH: 4,
-  DISPATCH_COMPLETE: 5,
-  DISPATCH_ERROR: 6
-}
-
-class WorkerStates <<enumeration>> {
-  STARTING: 0,
-  STARTED: 1,
-  LOADED: 2,
-  INITIALIZED: 3,
-  DISPATCH: 4,
-  JOB: 5,
-  COMPLETED: 6
-}
-```
-
-And a state machine describing how a thread is managed.
-
-```plantuml
-@startuml
-
-[*] --> STARTING
-STARTING --> STARTED : SCRIPTLOADED
-STARTING : Here we instantiate the Worker() object.
-
-STARTING --> COMPLETED : Exception instantiating Worker.
-
-STARTED --> LOADED : BASEINIT_COMPLETE
-STARTED : The basethread script properly loaded.
-
-STARTED --> COMPLETED : BASEINIT_ERROR
-
-LOADED --> INITIALIZED
-
-INITIALIZED : This is where we load requirejs.
-INITIALIZED : TODO Load any loading subsystem.
-
-
-INITIALIZED --> DISPATCH
-
-DISPATCH : This is where the execution
-DISPATCH :  of the sided script occurs.
-
-DISPATCH --> JOB
-JOB --> COMPLETED
-COMPLETED --> [*]
-
-@enduml
-```
 
 ## Concept
 
@@ -91,7 +24,7 @@ But the end result would be queueing work and using a [Promise](https://develope
       jobpath: 'src/ParsingJob.js'
     });
     job.then(function(result) {
-      tht._updateResult(result.toString());
+      that._updateResult(result.toString());
     }).catch(function(e) {
       console.error(e);
       that.dispatchEvent('JobFailed');
@@ -100,8 +33,8 @@ But the end result would be queueing work and using a [Promise](https://develope
 ```
 ## Drives
 
-Although threads are a new are for browsers.
-it is noted there is a sharp spin up times for these threads.
+Although threads are a not new are for browsers.  They have not reached an are where they are commonly used.
+It is noted there is a sharp spin up times for these threads.
 
 Only a messaging/event system works between Main and the threads...so it will be the goal to manage and recycle them reinitializing them.
 
@@ -113,16 +46,23 @@ Sequence
 
 This describes the sequence of messages for a thread to initialize.  to load requirejs.  to load a JOB requirejs module. and then instantiate and call the dispatch method of the object.
 
-![Sequence](http://www.plantuml.com/plantuml/svg/5Son4S8m30NGdYbW0QkdoYgsye-4i-KWVLtM9wbUzvPWTUReZzTksdD5Udzkv15l4Qzd-UpSicN0THfXB3g7Q4kYffnetzb2HWt2vOeay4kOeXntky3Mopy0)
+![Sequence](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/cbuteau/webjobs.es6/master/uml/sequence.puml)
+
+
+<!-- ![Sequence](http://www.plantuml.com/plantuml/svg/5Son4S8m30NGdYbW0QkdoYgsye-4i-KWVLtM9wbUzvPWTUReZzTksdD5Udzkv15l4Qzd-UpSicN0THfXB3g7Q4kYffnetzb2HWt2vOeay4kOeXntky3Mopy0) -->
 
 Some enums that matter
 
-![Enums](http://www.plantuml.com/plantuml/svg/5Son4S8m30NGdYbW0QkdoYgsyu-4i-ISz7LUdr2zxct1wamTZzTfVUIEzF4yo2lU8bvN-PmyicN0-pJ2MFfKwIs9chBGlhE5Q0t2vOu4bXhb-fyRRB_z0G00)
+![Enums](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/cbuteau/webjobs.es6/master/uml/enums.puml)
+
+<!-- ![Enums](http://www.plantuml.com/plantuml/svg/5Son4S8m30NGdYbW0QkdoYgsyu-4i-ISz7LUdr2zxct1wamTZzTfVUIEzF4yo2lU8bvN-PmyicN0-pJ2MFfKwIs9chBGlhE5Q0t2vOu4bXhb-fyRRB_z0G00) -->
 
 
 And a state machine describing how a thread is managed.
 
-![State](http://www.plantuml.com/plantuml/svg/5Son4S8m30NGdYbW0QkdoYgsye-4i-MSz7LP7rEzxct1wipH7w_JjEUEzFuyo2lU8bxlyZbvPCk0wpJ2M7GEqPP4JRdHlhE5Z1g4oufaZKIKwvzki7tv0m00)
+![Enums](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/cbuteau/webjobs.es6/master/uml/states.puml)
+
+<!-- ![State](http://www.plantuml.com/plantuml/svg/5Son4S8m30NGdYbW0QkdoYgsye-4i-MSz7LP7rEzxct1wipH7w_JjEUEzFuyo2lU8bxlyZbvPCk0wpJ2M7GEqPP4JRdHlhE5Z1g4oufaZKIKwvzki7tv0m00) -->
 
 ## Discovered through Implementation.
 
