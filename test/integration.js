@@ -23,7 +23,7 @@ fdescribe('Full back and forth', function() {
     // cover ensureId
     spyOn(Math, 'random').and.returnValues(0.1, 0.1, 0.2, 0.3, 0.4);
     var prom = TroubleMaker.start({
-      jobPath: 'jobs/MathJob.js',
+      jobPath: '/jobs/MathJob.js',
       jobParams: {
         param1: 10,
         param2: 20
@@ -31,9 +31,13 @@ fdescribe('Full back and forth', function() {
     });
 
     prom.then(function(result) {
-      expect(result).toBe(42);
+      expect(result).toBe(30);
       done();
-    });
+    }).catch(function(e) {
+      expect(e).toBeNull();
+      console.error(e);
+      done();
+    });;
 
   });
 
@@ -41,15 +45,20 @@ fdescribe('Full back and forth', function() {
     // cover ensureId
     spyOn(Math, 'random').and.returnValues(0.1, 0.1, 0.2, 0.3, 0.4);
     var prom = TroubleMaker.start({
-      jobPath: 'jobs/MathJob.js',
+      jobPath: '/jobs/MathJob.js',
       jobParams: {
         param1: 10,
-        param2: 20
+        param2: 20,
+        op: '*'
       }
     });
 
     prom.then(function(result) {
-      expect(result).toBe(42);
+      expect(result).toBe(200);
+      done();
+    }).catch(function(e) {
+      expect(e).toBeNull();
+      console.error(e);
       done();
     });
 
@@ -59,7 +68,7 @@ fdescribe('Full back and forth', function() {
     // cover ensureId
     spyOn(Math, 'random').and.returnValues(0.1, 0.1, 0.2, 0.3, 0.4);
     var prom = TroubleMaker.start({
-      jobPath: 'jobs/MathJob.js',
+      jobPath: '/jobs/MathJob.js',
       jobParams: {
         param1: 10,
         param2: 20

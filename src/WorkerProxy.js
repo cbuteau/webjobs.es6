@@ -58,6 +58,12 @@ class WorkerProxy {
         pathToBase = this.options.appPath + pathToBase;
       }
 
+      var jobPath = options.jobPath;
+      if (this.options.appPath) {
+        jobPath = this.options.appPath + jobPath;
+        this.settings.jobPath = jobPath;
+      }
+
       this.settings._worker = new Worker(pathToBase, {type:'module'});
       this.settings._worker.onmessage = this._boundOnMessage;
       this.settings._worker.onerror = this._boundOnError;
@@ -80,22 +86,17 @@ class WorkerProxy {
         that.reject(new Error('Job Timeout'));
       }, options.timeout);
     }
-
-    // maybe post message to initialize?
-    this.settings._worker.postMessage({
-      msg: MessageIds.BASEINIT,
-      jobPath: options.jobPath
-    });
   }
 
   onMessage(e) {
     var data = e.data;
     switch (data.msg) {
       case MessageIds.SCRIPTLOADED:
+
         // respond with jobPAth to initialize
         this.settings._worker.postMessage({
           msg: MessageIds.BASEINIT,
-          jobPath: this.options.jobPath,
+          jobPath: this.settings.jobPath,
           workerId: this.settings.id
         });
         break;
