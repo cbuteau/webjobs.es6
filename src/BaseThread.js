@@ -56,9 +56,14 @@ onmessage = function(e) {
         });
       }).catch(function(err) {
         console.error(err);
+        var errorInfo;
+        if (err) {
+          errorInfo = convertError(err);
+        }
         postMessage({
           msg: 3,
-          workerId: data.workerId
+          workerId: data.workerId,
+          error: errorInfo
         });
       });
       break;

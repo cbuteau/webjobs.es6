@@ -57,8 +57,8 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['ChromeExperiment', 'Firefox'],
-
+    //browsers: ['ChromeExperiment', 'FirefoxDynamicImport'],
+    browsers: ['ChromeExperiment'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
@@ -69,6 +69,12 @@ module.exports = function(config) {
     concurrency: Infinity,
 
     customLaunchers: {
+      FirefoxDynamicImport: {
+          base: 'Firefox',
+          prefs: {
+              'javascript.options.dynamicImport': true
+          }
+      },
       ChromeExperiment: {
         base: 'Chrome',
         flags: [

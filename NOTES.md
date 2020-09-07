@@ -34,3 +34,9 @@ Import seems to work with extra .. in job path but the object is not a construct
 7/14/2019
 
 Screw babel it uses an old version of braces and I cannot fix it...
+
+
+9/7/2020
+
+At this point it is discovered that FireFox cannot import('scriptpath') dynamically.
+Maybe we should throw another browser in the test list?
