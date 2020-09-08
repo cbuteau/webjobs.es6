@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start",
-    "testc": "karma start --single-run",
+    "testc": "karma start --single-run --browsers ChromeHeadlessNoSandbox",
     "server": "node scripts/server.js"
   },
   "repository": {

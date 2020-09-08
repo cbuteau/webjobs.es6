@@ -1,6 +1,26 @@
 # webjobs.es6
 ES6 version of webjobs concept
 
+## Badges
+
+<!-- ### Coveralls
+
+[![Coverage Status](https://coveralls.io/repos/github/cbuteau/typetools/badge.svg)](https://coveralls.io/github/cbuteau/typetools) -->
+
+### Circle CI Build
+
+[![CircleCI](https://circleci.com/gh/cbuteau/webjobs.es6.svg?style=svg)](https://circleci.com/gh/cbuteau/webjobs.es6)
+
+### npm Version
+
+[![npm version](http://img.shields.io/npm/v/webjobs.es6.svg?style=flat)](https://npmjs.org/package/webjobs.es6 "View this project on npm")
+
+
+### npm big badge
+
+[![NPM](https://nodei.co/npm/webjobs.es6.png)](https://nodei.co/npm/webjobs.es6/)
+
+
 
 ## Dispatching
 

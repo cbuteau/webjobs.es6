@@ -1,0 +1,43 @@
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/gitsrc
+    docker:
+      - image: circleci/node:jessie-browsers
+    environment:
+      JVM_OPTS: -Xmx3200m
+      NODE_ENV: false
+      #COVERALLS_REPO_TOKEN: HICc0XwxeBruKFxp0BdCKfGLIHGGTYQhg
+    steps:
+      - checkout
+      - run:
+          name: Starting Xvfb (for Browser Tests)
+          command: Xvfb :99 -screen 0 1280x1024x24 
+          background: true
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
+      - run:
+          name: setup-for-karma
+          command: npm set prefix=/home/circleci/npm && echo 'export PATH=$HOME/circleci/npm/bin:$PATH' >> /home/circleci/.bashrc
+      - run:
+          name: globals karma-cli, jasmine, jspm
+          command: npm install -g karma-cli jasmine jspm
+      - restore_cache:
+          key: dependency-cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: npm install
+          command: npm install
+      - run:
+          name: run test
+          command: npm run testc
+      - store_artifacts:
+          path: coverage
+      - save_cache:
+          key: dependency-cache-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - .node_modules
