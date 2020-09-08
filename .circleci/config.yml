@@ -10,17 +10,17 @@ jobs:
       #COVERALLS_REPO_TOKEN: HICc0XwxeBruKFxp0BdCKfGLIHGGTYQhg
     steps:
       - checkout
-      - run:
-          name: Starting Xvfb (for Browser Tests)
-          command: Xvfb :99 -screen 0 1280x1024x24 
-          background: true
-      - run:
-          name: Download Selenium
-          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-      - run:
-          name: Start Selenium
-          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-          background: true
+      # - run:
+      #     name: Starting Xvfb (for Browser Tests)
+      #     command: Xvfb :99 -screen 0 1280x1024x24
+      #     background: true
+      # - run:
+      #     name: Download Selenium
+      #     command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      # - run:
+      #     name: Start Selenium
+      #     command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+      #     background: true
       - run:
           name: setup-for-karma
           command: npm set prefix=/home/circleci/npm && echo 'export PATH=$HOME/circleci/npm/bin:$PATH' >> /home/circleci/.bashrc
