@@ -15,6 +15,13 @@ module.exports = function(config) {
     basePath: '',
 
 
+    plugins: [
+      // load plugin
+      require.resolve('@open-wc/karma-esm'),
+      // fallback: resolve any karma- plugins
+      'karma-*'
+    ],
+
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
@@ -67,6 +74,10 @@ module.exports = function(config) {
     //browsers: ['ChromeExperiment', 'FirefoxDynamicImport'],
     browsers: ['ChromeExperiment'],
 
+    esm: {
+      // if you are using 'bare module imports' you will need this option
+      nodeResolve: true
+    },
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
