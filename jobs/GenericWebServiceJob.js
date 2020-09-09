@@ -54,4 +54,7 @@ class GenericWebServiceJob {
   }
 }
 
+// you have to export AS Job because the thread calls.. new result.Job()
+// makes it eaither on both sides.
+// otherwise to start a job client code would have to provide file and constructor.
 export {GenericWebServiceJob as Job}
