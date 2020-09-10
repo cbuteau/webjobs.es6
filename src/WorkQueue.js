@@ -22,6 +22,7 @@ class WorkQueue {
       parts: new PromiseParts()
     }
     this.work.push(context);
+    this._start();
     return context.parts._promise;
   }
 
@@ -30,7 +31,6 @@ class WorkQueue {
 
     while (this.work.length) {
       var workContext = this.work.pop();
-      var parts = new PromiseParts();
       workContext.work.execute.call(workContext.work, workContext.parts);
       counter++;
     }
