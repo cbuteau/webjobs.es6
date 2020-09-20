@@ -4,10 +4,10 @@
 module.exports = function(config) {
   config.set({
     // trying to help chrome work.
-    browserNoActivityTimeout: 400000,
+    browserNoActivityTimeout: 40000,
     browserDisconnectTimeout: 10000,
     captureTimeout: 210000,
-    browserDisconnectTolerance: 5,
+    browserDisconnectTolerance: 7,
     processKillTimeout: 100000,
 
 

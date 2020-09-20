@@ -35,8 +35,8 @@ jobs:
       - run:
           name: run test
           command: npm run testc
-      - store_artifacts:
-          path: coverage
+      # - store_artifacts:
+      #     path: coverage
       - save_cache:
           key: dependency-cache-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
