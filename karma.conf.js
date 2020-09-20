@@ -72,7 +72,9 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     //browsers: ['ChromeExperiment', 'FirefoxDynamicImport'],
-    browsers: ['ChromeExperiment'],
+    //browsers: ['ChromeExperiment'],
+
+    browsers: ['ChromeHeadlessNoSandbox'],
 
     esm: {
       // if you are using 'bare module imports' you will need this option
