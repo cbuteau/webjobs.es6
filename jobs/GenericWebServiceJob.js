@@ -11,16 +11,16 @@ function request(url, verb, body, onComplete, onFailure) {
   }
 
   function transferComplete(evt) {
-    console.log("The transfer is complete.");
+    console.info("The transfer is complete.");
     onComplete(JSON.parse(evt.currentTarget.responseText));
   }
 
   function transferFailed(evt) {
-    console.log("An error occurred while transferring the file.");
+    console.info("An error occurred while transferring the file.");
   }
 
   function transferCanceled(evt) {
-    console.log("The transfer has been canceled by the user.");
+    console.info("The transfer has been canceled by the user.");
   }
 
   xhr.addEventListener("load", transferComplete);

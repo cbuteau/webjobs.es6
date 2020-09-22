@@ -90,6 +90,7 @@ class WorkerProxy {
 
   onMessage(e) {
     var data = e.data;
+    console.info('onmessage()', data);
     switch (data.msg) {
       case MessageIds.SCRIPTLOADED:
 
@@ -134,7 +135,7 @@ class WorkerProxy {
         }
         break;
       default:
-        console.log('Unhandled = ' + data.msg);
+        console.info('Unhandled = ' + data.msg);
         break;
     }
   }

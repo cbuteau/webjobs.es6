@@ -25,8 +25,8 @@
 //   }
 // }
 
-console.log('we are in thread');
-console.log(self);
+console.info('we are in thread');
+console.info(self);
 
 // trying this maybe webworkers cannot be es6 now..
 
@@ -45,7 +45,7 @@ function convertError(error) {
 
 onmessage = function(e) {
   var data = e.data;
-  console.log('msg in' + data.msg);
+  console.info('msg in' + data.msg);
   switch (data.msg) {
     case 1:
       import(data.jobPath).then(function(dispatcher) {
