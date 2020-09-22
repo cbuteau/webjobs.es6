@@ -40,3 +40,14 @@ Screw babel it uses an old version of braces and I cannot fix it...
 
 At this point it is discovered that FireFox cannot import('scriptpath') dynamically.
 Maybe we should throw another browser in the test list?
+
+
+# 9/20/2020
+
+Command before running in WSL...Windows Subsystem Linux...
+
+Problem reproduces...
+
+```bash
+export CHROME_BIN=/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe
+```

@@ -6,6 +6,7 @@
   "scripts": {
     "test": "karma start",
     "testc": "karma start --single-run --browsers ChromeHeadlessNoSandbox",
+    "testd": "karma start --single-run --browsers ChromeHeadlessNoSandboxDebug",
     "server": "node scripts/server.js"
   },
   "repository": {
@@ -36,6 +37,7 @@
     "karma-chrome-launcher": "3.1.0",
     "karma-firefox-launcher": "1.3.0",
     "karma-jasmine": "4.0.1",
+    "karma-spec-reporter": "0.0.32",
     "lodash": "4.17.14"
   }
 }

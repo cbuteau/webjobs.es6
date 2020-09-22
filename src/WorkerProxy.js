@@ -69,18 +69,16 @@ class WorkerProxy {
       this.settings._worker = new Worker(pathToBase, {type:'module'});
       this.settings._worker.onmessage = this._boundOnMessage;
       this.settings._worker.onerror = this._boundOnError;
-
+      var that = this;
+      this._promise = new Promise(function(resolve, reject) {
+        that.reject = reject;
+        that.resolve = resolve;
+      });
     } catch(e) {
       console.error(e);
       this.updateState(WorkerStates.COMPLETED);
     }
 
-
-    var that = this;
-    this._promise = new Promise(function(resolve, reject) {
-      that.reject = reject;
-      that.resolve = resolve;
-    });
 
     if (options.timeout) {
       setTimeout(function() {

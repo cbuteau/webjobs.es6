@@ -3,6 +3,8 @@ import TroubleMaker from "../src/TroubleMaker.js"
 
 import ThePool from "../src/ThePool.js"
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
 fdescribe('Full back and forth', function() {
 
 

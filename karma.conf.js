@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
     // trying to help chrome work.
     browserNoActivityTimeout: 40000,
-    browserDisconnectTimeout: 10000,
+    browserDisconnectTimeout: 50000,
     captureTimeout: 210000,
     browserDisconnectTolerance: 7,
     processKillTimeout: 100000,
@@ -49,7 +49,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'spec'],
 
 
     // web server port
@@ -62,7 +62,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -74,7 +74,7 @@ module.exports = function(config) {
     //browsers: ['ChromeExperiment', 'FirefoxDynamicImport'],
     //browsers: ['ChromeExperiment'],
 
-    browsers: ['ChromeHeadlessNoSandbox'],
+    browsers: ['ChromeExperiment'],
 
     esm: {
       // if you are using 'bare module imports' you will need this option
@@ -109,7 +109,18 @@ module.exports = function(config) {
         flags: [
           '--no-sandbox', //default karma-esm configuration
           '--disable-setuid-sandbox', //default karma-esm configuration
-          '--enable-experimental-web-platform-features' // necessary when using importMap option
+          '--enable-experimental-web-platform-features', // necessary when using importMap option
+          '--disable-gpu', // why not try it,
+          '--js-flags="--max_old_space_size=4096"' // mentioned in forums.
+        ]
+      },
+      ChromeHeadlessNoSandboxDebug: {
+        base: 'ChromeHeadless',
+        flags: [
+          '--no-sandbox', //default karma-esm configuration
+          '--disable-setuid-sandbox', //default karma-esm configuration
+          '--enable-experimental-web-platform-features', // necessary when using importMap option
+          '--remote-debugging-port=9222' ///for debugging...
         ]
       },
     }
