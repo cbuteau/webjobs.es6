@@ -2,27 +2,27 @@
   "name": "webjobs.es6",
   "version": "1.0.0",
   "description": "ES6 webjob manager.",
-  "main": "index.js",
-  "scripts": {
-    "test": "karma start",
-    "testc": "karma start --single-run --browsers ChromeHeadlessNoSandbox",
-    "testd": "karma start --single-run --browsers ChromeHeadlessNoSandboxDebug",
-    "server": "node scripts/server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cbuteau/webjobs.es6.git"
-  },
   "keywords": [
     "webworker",
     "library"
   ],
-  "author": "Christopher W Buteau <cbuteau@gmail.com>",
-  "license": "MIT",
+  "homepage": "https://github.com/cbuteau/webjobs.es6#readme",
   "bugs": {
     "url": "https://github.com/cbuteau/webjobs.es6/issues"
   },
-  "homepage": "https://github.com/cbuteau/webjobs.es6#readme",
+  "license": "MIT",
+  "author": "Christopher W Buteau <cbuteau@gmail.com>",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbuteau/webjobs.es6.git"
+  },
+  "scripts": {
+    "test": "karma start",
+    "testc": "karma start --single-run --browsers ChromeHeadlessNoSandbox",
+    "testd": "karma start --single-run --browsers ChromeHeadlessNoSandboxDebug",
+    "start": "node scripts/server.js"
+  },
   "dependencies": {
     "express": "4.16.3"
   },
