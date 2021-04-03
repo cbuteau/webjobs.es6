@@ -3,6 +3,8 @@ import TroubleMaker from "../src/TroubleMaker.js"
 
 import ThePool from "../src/ThePool.js"
 
+import Boss from "../src/Boss.js"
+
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
 fdescribe('Full back and forth', function() {
@@ -85,5 +87,42 @@ fdescribe('Full back and forth', function() {
 
   });
 
+  class PrepData {
+    constructor(options) {
+      this.options = options;
+    }
+
+    execute(parts) {
+      parts.resolve({
+        param1: 10,
+        param2: 20
+      })
+    }
+  }
+
+  class DispatchToUI {
+    constructor(options) {
+      this.options = options
+    }
+
+    execute(parts) {
+      // push to HTML.
+      parts.resolve();
+    }
+  }
+
+  fdescribe('Test Boss...', function(done) {
+    let job = Boss.create({
+      prep: [new PrepData()],
+      prepResults: function(results) {
+        return {
+          jobPath: 'jobs/TestJob',
+          jobParams: results[0]
+        }
+      },
+      postConstructor: DispatchToUI
+    });
+    job.then(done);
+  });
 
 });
